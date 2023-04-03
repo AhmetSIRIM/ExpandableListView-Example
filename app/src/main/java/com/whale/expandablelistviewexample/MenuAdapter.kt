@@ -1,6 +1,5 @@
 package com.whale.expandablelistviewexample
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import com.whale.expandablelistviewexample.databinding.CategoryListGroupBinding
 import com.whale.expandablelistviewexample.databinding.ProductListItemBinding
 
 class MenuAdapter(
-    private val context: Context,
     private val groupList: List<Category>,
     private val childList: MutableMap<Category, List<Product>>
 ) : BaseExpandableListAdapter() {
@@ -29,8 +27,8 @@ class MenuAdapter(
      * ediyor.
      */
     override fun getChildrenCount(groupPosition: Int): Int {
-        Log.d("getChildrenCount result: ", "${childList[groupList[groupPosition]]!!.size}")
-        return childList[groupList[groupPosition]]!!.size
+        Log.d("getChildrenCount result: ", "${childList[groupList[groupPosition]]?.size ?: 0}")
+        return childList[groupList[groupPosition]]?.size ?: 0
     }
 
     /**
@@ -47,8 +45,17 @@ class MenuAdapter(
      * Any return ediyordu fakat ben değiştirdim.
      */
     override fun getChild(groupPosition: Int, childPosition: Int): Product {
-        Log.d("getChild result: ", "${childList[groupList[groupPosition]]!![childPosition]}")
-        return childList[groupList[groupPosition]]!![childPosition]
+        Log.d(
+            "getChild result: ",
+            "${
+                childList[groupList[groupPosition]]?.get(childPosition) ?: Product(
+                    null,
+                    null,
+                    null
+                )
+            }"
+        )
+        return childList[groupList[groupPosition]]?.get(childPosition) ?: Product(null, null, null)
     }
 
     /**
@@ -85,7 +92,7 @@ class MenuAdapter(
         parent: ViewGroup?
     ): View {
         val binding: CategoryListGroupBinding =
-            CategoryListGroupBinding.inflate(LayoutInflater.from(context))
+            CategoryListGroupBinding.inflate(LayoutInflater.from(parent?.context))
         binding.textViewCategoryListGroup.text = getGroup(groupPosition).name
         return binding.root
     }
@@ -101,7 +108,7 @@ class MenuAdapter(
         parent: ViewGroup?
     ): View {
         val binding: ProductListItemBinding =
-            ProductListItemBinding.inflate(LayoutInflater.from(context))
+            ProductListItemBinding.inflate(LayoutInflater.from(parent?.context))
 
         binding.apply {
             TextViewProductName.text = getChild(groupPosition, childPosition).name

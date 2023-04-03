@@ -31,16 +31,17 @@ class MainActivity : AppCompatActivity() {
             ),
             Product(
                 ResourcesCompat.getDrawable(resources, R.drawable.image_latte, null),
-                "Americano",
+                "Latte",
                 37
             )
         )
 
         val snackList = listOf(
             Product(
-                ResourcesCompat.getDrawable(resources, R.drawable.image_croissant, null),
-                "Croissant",
-                29
+                null, null, null
+//                ResourcesCompat.getDrawable(resources, R.drawable.image_croissant, null),
+//                "Croissant",
+//                29
             )
         )
 
@@ -56,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         productList[categoryList[1]] = snackList
         productList[categoryList[2]] = otherDrinksList
 
-        adapter = MenuAdapter(this, categoryList, productList)
+        adapter = MenuAdapter(categoryList, productList)
         binding.expandableListView.setAdapter(adapter)
 
     }
