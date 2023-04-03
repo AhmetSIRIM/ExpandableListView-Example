@@ -38,10 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         val snackList = listOf(
             Product(
-                null, null, null
-//                ResourcesCompat.getDrawable(resources, R.drawable.image_croissant, null),
-//                "Croissant",
-//                29
+                ResourcesCompat.getDrawable(resources, R.drawable.image_croissant, null),
+                "Croissant",
+                29
             )
         )
 
